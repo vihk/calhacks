@@ -1,5 +1,7 @@
 #!/venv/bin/python
 from hume import HumeBatchClient
+
+
 from hume.models.config import FaceConfig
 
 client = HumeBatchClient("GB5GR8utyBkDmLHy5Kh7mtAGGebtMK5R9nDVhn7p5u7FMcT2i")
