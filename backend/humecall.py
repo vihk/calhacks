@@ -26,15 +26,14 @@ job.download_artifacts("artifacts.zip")
 print("Artifacts downloaded to artifacts.zip")
 
 with open('/Users/gill/Documents/GitHub/calhacks/backend/predictions.json', 'r') as f:
-    # Load the contents of the file into a variable
+
     data = json.load(f)
 
-# Print the contents of the variable
+
 print(data)
-# Extract predictions
+
 predictions = data[0]['results']['predictions'][0]['models']['prosody']['grouped_predictions'][0]['predictions']
 
-# Flatten to get just the predicted text
 texts = []
 for pred in predictions:
     texts.append(pred['text'])
@@ -56,15 +55,15 @@ for item in data:
                     'Emotion_Score': emotion['score']
                 })
 
-# Create a Pandas DataFrame
+
 df = pd.DataFrame(flattened_data)
 
-# Display the DataFrame
+
 print(df)
 
 grouped_df = df.groupby('Text')
 
-# Display the grouped DataFrame
+
 groups = []
 texts = []
 for name, group in grouped_df:
@@ -80,15 +79,15 @@ for i,text in enumerate(texts):
     send_data[text] = json.loads(df_json)
 json_data = json.dumps(send_data)
 
-app = Flask(__name__)
-CORS(app)
+# app = Flask(__name__)
+# CORS(app)
 
-@app.route('/', methods=['POST'])
+# @app.route('/', methods=['POST'])
 
-def predict():
-    text = request.json['text']
-    print('recieved.')
-    result = json_data
-    return result
-if __name__ == '__main__':
-    app.run(host='localhost',port=3000)
+# def predict():
+#     text = request.json['text']
+#     print('recieved.')
+#     result = json_data
+#     return result
+# if __name__ == '__main__':
+#     app.run(host='localhost',port=3000)
