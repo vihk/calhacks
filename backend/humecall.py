@@ -1,17 +1,19 @@
 #!/venv/bin/python
 from hume import HumeBatchClient
-
-
 from hume.models.config import FaceConfig
+from hume.models.config import ProsodyConfig
 
 client = HumeBatchClient("GB5GR8utyBkDmLHy5Kh7mtAGGebtMK5R9nDVhn7p5u7FMcT2")
-urls = ["https://iep.utm.edu/wp-content/media/hume-bust.jpg"]
-config = FaceConfig()
-job = client.submit_job(urls, [config])
+urls = ["https://storage.googleapis.com/hume-test-data/video/armisen-clip.mp4"]
+configs = [ProsodyConfig(identify_speakers = True)]
+job = client.submit_job(urls, configs)
 
-status = job.get_status()
-print(f"Job status: {status}")
+print(job)
+print("Running...")
 
-details = job.get_details()
-run_time_ms = details.get_run_time_ms()
-print(f"Job ran for {run_time_ms} milliseconds")
+job.await_complete()
+job.download_predictions("predictions.json")
+print("Predictions downloaded to predictions.json")
+
+job.download_artifacts("artifacts.zip")
+print("Artifacts downloaded to artifacts.zip")
