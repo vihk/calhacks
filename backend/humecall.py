@@ -9,9 +9,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 
-def dick():
+def dick(url):
     client = HumeBatchClient("GB5GR8utyBkDmLHy5Kh7mtAGGebtMK5R9nDVhn7p5u7FMcT2")
-    urls = ["https://storage.googleapis.com/hume-test-data/video/armisen-clip.mp4"]
+    urls = [url]
     configs = [ProsodyConfig(identify_speakers = True)]
     job = client.submit_job(urls, configs)
 
@@ -78,7 +78,7 @@ def dick():
         df_json = groups[i].to_json()
         send_data[text] = json.loads(df_json)
     json_data = json.dumps(send_data)
-
+    return json_data
 app = Flask(__name__)
 CORS(app)
 @app.route('/', methods=['POST'])
@@ -86,8 +86,9 @@ CORS(app)
 def predict():
     text = request.json['text']
     print('recieved.')
-    result = text
-    return result
+    result = dick(text)
+    print(result)
+    return {'result':result}
 if __name__ == '__main__':
     app.run(host='localhost',port=3000)
 
