@@ -1,7 +1,11 @@
 <template>
-  <!-- form -->
-  
-  <p>Response: {{ response }}</p>
+
+  <form @submit.prevent="submit">
+    <input v-model="textInput">  
+    <button>Submit</button>
+  </form>
+
+  <div>Response: {{ response }}</div>
 
 </template>
 
@@ -10,16 +14,29 @@ export default {
 
   data() {
     return {
+      textInput: '',
       response: null
     }
   },
 
   methods: {
-    async onSubmit(text) {
-      const response = await fetch('/some/api', {
-        method: 'POST',
-        body: text  
-      })  
+    async submit() {
+
+    // Create JSON object 
+    const body = {
+      text: this.textInput
+    }
+
+    // Stringify it 
+    const jsonBody = JSON.stringify(body)
+
+    const response = await fetch('http://localhost:3000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonBody 
+    })
       
       this.response = await response.json()
     }
