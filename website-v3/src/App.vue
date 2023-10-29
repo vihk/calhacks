@@ -1,15 +1,20 @@
 <template>
   <div class="container">
-    <form @submit.prevent="submit" class="form">
-      <input v-model="textInput" class="input-field">
-      <button class="submit-button">Submit</button>
-    </form>
-    <div class="response">
-      <div v-for="(segment, index) in formattedResponseSegments" :key="index" class="response-box">
-        <p class="response-title">{{ segment[0] }}</p>
-        <ul class="response-list">
-          <li v-for="(item, itemIndex) in segment.slice(1)" :key="itemIndex">{{ item }}</li>
-        </ul>
+    <h1 class="rainbow-title">AIQuikSkills: Aryan's Personal Blog</h1> <!-- Move the logo above the search bar -->
+    <div class="search-bar">
+      <form @submit.prevent="submit" class="form">
+        <input v-model="textInput" class="input-field">
+        <button class="submit-button">Submit</button>
+      </form>
+    </div>
+    <div class="content">
+      <div class="response">
+        <div v-for="(segment, index) in formattedResponseSegments" :key="index" class="response-box">
+          <p class="response-title">{{ segment[0] }}</p>
+          <ul class="response-list">
+            <li v-for="(item, itemIndex) in segment.slice(1)" :key="itemIndex">{{ item }}</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -70,7 +75,18 @@ export default {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #333; /* Dark gray background */
+  background-color: #1c1c1c; /* Dark gray background */
+  overflow: hidden; /* Hide horizontal overflow */
+  position: relative; /* Enable relative positioning for the search bar */
+}
+
+.search-bar {
+  width: 100%;
+  background-color: #252525; /* Dark gray background for the search bar */
+  position: fixed; /* Fix the search bar at the top */
+  top: 0;
+  z-index: 1; /* Place the search bar above other content */
+  padding: 10px;
 }
 
 .form {
@@ -96,8 +112,14 @@ export default {
   cursor: pointer;
 }
 
+.content {
+  width: 100%;
+  overflow-y: auto; /* Enable vertical scrolling for the content area */
+  max-height: calc(100vh - 50px); /* Subtract the search bar height */
+  padding: 10px;
+}
+
 .response {
-  margin-top: 20px;
   color: #000000; /* White text color for the response */
 }
 
@@ -122,5 +144,36 @@ export default {
 
 .response-list li {
   font-size: 14px;
+}
+
+.rainbow-title {
+  animation: rainbowFlash 4s linear infinite;
+}
+
+@keyframes rainbowFlash {
+  0% {
+    color: red;
+  }
+  14% {
+    color: rgb(0, 255, 64);
+  }
+  28% {
+    color: rgb(255, 0, 0);
+  }
+  42% {
+    color: green;
+  }
+  57% {
+    color: rgb(255, 0, 0);
+  }
+  71% {
+    color: rgb(26, 130, 0);
+  }
+  85% {
+    color: rgb(255, 37, 37);
+  }
+  100% {
+    color: rgb(21, 255, 0);
+  }
 }
 </style>

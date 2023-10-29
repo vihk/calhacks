@@ -69,7 +69,7 @@ def dick(url):
     for name, group in grouped_df:
         print(f"Text: {name}")
         group = group.sort_values(by="Emotion_Score",ascending=False) 
-        group = group[group["Emotion_Score"].apply(float) > .10]
+        group = group[group["Emotion_Score"].apply(float) > .10].sort_values(by="Emotion_Score",ascending=False).head(3)
         groups.append(group)
         texts.append(name)
 
