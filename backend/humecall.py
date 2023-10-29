@@ -86,8 +86,7 @@ def dick(url):
     for key in newdict.keys():
         appendscore = {}
         newdicts = newdict[key].set_index("Emotion_Name")
-        newdicts = newdicts.to_dict()
-        scoredict[key] = newdicts
+        scoredict[key] = newdicts['Emotion_Score'].to_dict()
     return scoredict
 
 app = Flask(__name__)
