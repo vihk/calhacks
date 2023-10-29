@@ -79,15 +79,16 @@ for i,text in enumerate(texts):
     send_data[text] = json.loads(df_json)
 json_data = json.dumps(send_data)
 
-# app = Flask(__name__)
-# CORS(app)
+app = Flask(__name__)
+CORS(app)
 
-# @app.route('/', methods=['POST'])
+@app.route('/', methods=['POST'])
 
-# def predict():
-#     text = request.json['text']
-#     print('recieved.')
-#     result = json_data
-#     return result
-# if __name__ == '__main__':
-#     app.run(host='localhost',port=3000)
+def predict():
+    text = request.json['text']
+    print('recieved.')
+    result = json_data
+    return result
+if __name__ == '__main__':
+    app.run(host='localhost',port=3000)
+
