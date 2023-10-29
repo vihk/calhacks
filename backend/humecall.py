@@ -73,12 +73,23 @@ def dick(url):
         groups.append(group)
         texts.append(name)
 
-    send_data = {}
-    for i,text in enumerate(texts):
-        df_json = groups[i].to_json()
-        send_data[text] = json.loads(df_json)
-    json_data = json.dumps(send_data)
-    return json_data
+    newdict = {}
+    while texts != []:
+        if len(texts) == 1:
+            newdict[texts[0]] = groups[0]
+            texts = []
+        else:
+            newdict[texts[0]] = groups[0]
+            groups = groups[1:]
+            texts = texts[1:]
+    scoredict = {}
+    for key in newdict.keys():
+        appendscore = {}
+        newdicts = newdict[key].set_index("Emotion_Name")
+        newdicts = newdicts.to_dict()
+        scoredict[key] = newdicts
+    return scoredict
+
 app = Flask(__name__)
 CORS(app)
 @app.route('/', methods=['POST'])
